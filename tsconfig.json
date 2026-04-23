@@ -1,0 +1,16 @@
+{
+  "extends": "@react-native/typescript-config",
+  "compilerOptions": {
+     "baseUrl": ".",
+    "paths": {
+      "app-wallet/*": ["Src/Features/Wallet/*"],
+      "app-Auth/*": ["Src/Features/Auth/*"]
+    },
+    "types": ["jest"],
+    "strict": true,
+    "noImplicitAny": true
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["**/node_modules", "**/Pods"],
+  
+}

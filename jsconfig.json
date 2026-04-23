@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./Src",
+    "paths": {
+      "app-wallet/*": ["Features/Wallet/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
