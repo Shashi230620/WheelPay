@@ -94,6 +94,9 @@ const SplashScreen = () => {
       titleAccent: "Smarter Way",
       subtitle: "One app for all your payments,\nrides and more.",
     },
+      {id:2,img:require("app-Auth/assets/2.png"),title:"Secure",    titleAccent:"Every Payment",subtitle:"Advance security to keep your money safe."},
+    {id:3,img:require("app-Auth/assets/3.png"),title:"Book ride", titleAccent:"With Ease",subtitle:"Quick , reliable and affortable  ride anytime ."},
+    {id:4,img:require("app-Auth/assets/4.png"),title:"Track and Manage",titleAccent:" Everything",subtitle:"Track expenses,manage budgets and grow smarter."},
   ]);
 
   return (
@@ -139,17 +142,16 @@ const styles = StyleSheet.create({
     width: width,
     flex: 1,
     paddingHorizontal: 30,
-    paddingTop: 80,
+    paddingTop: 50,
   },
   textContainer: {
     zIndex: 10,
-    marginBottom: 40,
   },
   title: {
-    fontSize: 42,
+    fontSize: 35,
     fontWeight: "800",
     color: "#FFFFFF",
-    lineHeight: 50,
+    lineHeight: 40,
     letterSpacing: -0.5,
   },
   titleAccent: {
@@ -158,7 +160,6 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 18,
     color: "#A0A0A0",
-    marginTop: 15,
     lineHeight: 26,
     fontWeight: "400",
   },
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: -20, // Slight pull up to center the composition
+    marginTop:"-70%"
   },
   mainImage: {
     width: width * 1.1, // Slightly wider to allow floating elements to breathe
