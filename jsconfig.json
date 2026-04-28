@@ -3,7 +3,8 @@
     "baseUrl": "./Src",
     "paths": {
       "app-wallet/*": ["Features/Wallet/*"],
-      "app-Auth/*":["Features/Auth/"]
+      "app-Auth/*":["Features/Auth/"],
+      "app-Common/*":["Common"]
     }
   },
   "exclude": ["node_modules"]

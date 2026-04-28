@@ -4,9 +4,9 @@ import ButtonProps from "./Button";
 
 const Button=({onPress,title}:ButtonProps)=>{
     return(
-        <View style={style.Button}>
+        <View style={style.getStartedButton}>
             <TouchableOpacity onPress={onPress}>
-                <Text style={style.Text}>{title}</Text>
+                <Text style={style.getStartedText}>{title}</Text>
             </TouchableOpacity>
             
         </View>
@@ -14,13 +14,20 @@ const Button=({onPress,title}:ButtonProps)=>{
 }
 
 const style=StyleSheet.create({
- Button:{
-    width:"30%",
-    height:"30%",
-    backgroundColor:"#6D5DF6"
- },
- Text:{
-    color:"white"
- }
+getStartedButton: {
+    backgroundColor: "#4F33FB", // Specific purple hue from UI
+    width: "80%",
+    height: 56,
+    borderRadius: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  getStartedText: {
+    color: "#FFFFFF",
+    fontSize: 18,
+    fontWeight: "700",
+  },
+
 })
 export default Button

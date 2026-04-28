@@ -4,7 +4,8 @@
      "baseUrl": ".",
     "paths": {
       "app-wallet/*": ["Src/Features/Wallet/*"],
-      "app-Auth/*": ["Src/Features/Auth/*"]
+      "app-Auth/*": ["Src/Features/Auth/*"],
+      "app-Common/*":["Src/Common"]
     },
     "types": ["jest"],
     "strict": true,

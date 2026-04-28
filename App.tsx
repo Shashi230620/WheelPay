@@ -30,12 +30,12 @@
 import React from "react";
 import SplashScreen from "app-Auth/Screens/SplashScreen";
 import LoginScreen from "app-Auth/Screens/Login";
-import SplashScreenProps from "app-Auth/Components/SplashscreenProps";
+
 
 const App=()=>{
   return(
     <>
-    <SplashScreen />
+    <LoginScreen />
     </>
   )
 }
