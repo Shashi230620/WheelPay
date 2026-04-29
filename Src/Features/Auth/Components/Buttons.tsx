@@ -5,9 +5,8 @@ import ButtonProps from "./Button";
 const Button=({onPress,title}:ButtonProps)=>{
     return(
         <View style={style.getStartedButton}>
-            <TouchableOpacity onPress={onPress}>
-                <Text style={style.getStartedText}>{title}</Text>
-            </TouchableOpacity>
+            
+            <Text style={style.getStartedText}>{title}</Text>
             
         </View>
     )

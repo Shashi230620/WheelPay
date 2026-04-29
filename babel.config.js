@@ -29,6 +29,7 @@ module.exports = {
         alias: {
           'app-wallet': './Src/Features/Wallet',
           'app-Auth': './Src/Features/Auth',
+          'app-Common':'./Src/Common',
         },
       },
     ],

@@ -1,5 +1,4 @@
-import { MMKV } from "react-native-mmkv";
+import { createMMKV } from "react-native-mmkv"
+const storage=new createMMKV()
 
-export const Memory=new MMKV({
-    id:"wheelPay",
-})
+export default storage

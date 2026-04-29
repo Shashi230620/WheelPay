@@ -8,17 +8,21 @@ import {
   SafeAreaView,
   Dimensions,
 } from "react-native";
-import { Memory } from "../../../Common/Storage/Storage/mmkv";
+import  storage  from "app-Common/Storage/Storage";
 import Button from "app-Auth/Components/Buttons";
 const { width } = Dimensions.get("window");
 
 const LoginScreen = () => {
-const [EmailMobile,setEmailMobile]=useState()
-const [Passward,setPassward]=useState()
+const [EmailMobile,setEmailMobile]=useState<string>("")
+const [Passward,setPassward]=useState<string>("")
 const [passwordVisible, setPasswordVisible] = useState(false); 
 
   const handleLogin=()=>{
-    Memory.set('passward',passwordVisible)
+    storage.set('EmailMobile', EmailMobile);
+  storage.set('Passward', Passward);
+  storage.set('Walletbalance',23546)
+console.log(storage.getString('EmailMobile'));
+console.log(storage.getString('Passward'));
   }
   return (
     <SafeAreaView style={styles.container}>
@@ -37,7 +41,7 @@ const [passwordVisible, setPasswordVisible] = useState(false);
             placeholder="Enter email or mobile number"
             placeholderTextColor="#555"
             value={EmailMobile}
-            onChange={(e)=>{setEmailMobile(e.target.value)}}
+            onChangeText={setEmailMobile}
           />
 
           <Text style={[styles.label, { marginTop: 20 }]}>Password</Text>
@@ -47,8 +51,8 @@ const [passwordVisible, setPasswordVisible] = useState(false);
               placeholder="Enter password"
               placeholderTextColor="#555"
               secureTextEntry={!passwordVisible}
-                value={Passward}
-            onChange={(e)=>{setPassward(e.target.value)}}
+              value={Passward}
+               onChangeText={setPassward}
             />
             <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
                 <Text>eye</Text>
@@ -59,7 +63,9 @@ const [passwordVisible, setPasswordVisible] = useState(false);
             <Text style={styles.forgotText}>Forgot Password?</Text>
           </TouchableOpacity>
 
-       <Button  title="Login"  onPress={handleLogin}/>
+       <TouchableOpacity onPress={handleLogin}>
+        <Button  title="Login"/>
+       </TouchableOpacity>
         </View>
 
         {/* Divider Section */}

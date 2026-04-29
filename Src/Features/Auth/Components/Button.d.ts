@@ -1,5 +1,4 @@
 type ButtonProps={
-onPress:()=>void,
-title:"string"
+title:string
 }
 export default ButtonProps
