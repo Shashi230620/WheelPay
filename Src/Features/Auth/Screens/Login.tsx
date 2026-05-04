@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -6,24 +6,30 @@ import {
   TextInput,
   TouchableOpacity,
   SafeAreaView,
-  Dimensions,
 } from "react-native";
-import  storage  from "app-Common/Storage/Storage";
+// Import the icon sets
+import Icon from "react-native-vector-icons/MaterialIcons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Button from "app-Auth/Components/Buttons";
-const { width } = Dimensions.get("window");
-
+import { supabase } from "app-Common/Supabase/SupabaseConnect";
 const LoginScreen = () => {
-const [EmailMobile,setEmailMobile]=useState<string>("")
-const [Passward,setPassward]=useState<string>("")
-const [passwordVisible, setPasswordVisible] = useState(false); 
+  const [MobileNumber,setMobilenumber]=useState<string>('')
 
-  const handleLogin=()=>{
-    storage.set('EmailMobile', EmailMobile);
-  storage.set('Passward', Passward);
-  storage.set('Walletbalance',23546)
-console.log(storage.getString('EmailMobile'));
-console.log(storage.getString('Passward'));
+  const SendOtp=async()=>{
+    const {data,error}=await supabase.auth.signInWithOtp({
+      phone:`+91${MobileNumber}`
+    });
+
+    if(error){
+      console.log('fail to send otp',error)
+      return false
+    }
+    else{
+      console.log('success')
+      return true
+    }
   }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
@@ -35,37 +41,24 @@ console.log(storage.getString('Passward'));
 
         {/* Input Section */}
         <View style={styles.form}>
-          <Text style={styles.label}>Email or Mobile Number</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter email or mobile number"
-            placeholderTextColor="#555"
-            value={EmailMobile}
-            onChangeText={setEmailMobile}
-          />
-
-          <Text style={[styles.label, { marginTop: 20 }]}>Password</Text>
-          <View style={styles.passwordContainer}>
+          <Text style={styles.label}>Mobile Number</Text>
+          <View style={styles.inputContainer}>
+            <Icon name="phone-iphone" size={20} color="#555" style={styles.inputIcon} />
             <TextInput
-              style={styles.passwordInput}
-              placeholder="Enter password"
+              style={styles.input}
+              placeholder="Enter mobile number"
               placeholderTextColor="#555"
-              secureTextEntry={!passwordVisible}
-              value={Passward}
-               onChangeText={setPassward}
+              keyboardType="phone-pad"
+              value={MobileNumber}
+              onChangeText={setMobilenumber}
             />
-            <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
-                <Text>eye</Text>
-            </TouchableOpacity>
           </View>
 
-          <TouchableOpacity style={styles.forgotButton}>
-            <Text style={styles.forgotText}>Forgot Password?</Text>
-          </TouchableOpacity>
-
-       <TouchableOpacity onPress={handleLogin}>
-        <Button  title="Login"/>
-       </TouchableOpacity>
+          <View style={{ marginTop: 30,marginLeft:40 ,width:"90%"}}>
+            <TouchableOpacity onPress={SendOtp}>
+              <Button title="Login" />
+            </TouchableOpacity>
+          </View>
         </View>
 
         {/* Divider Section */}
@@ -75,17 +68,18 @@ console.log(storage.getString('Passward'));
           <View style={styles.line} />
         </View>
 
-        {/* Social Logins */}
+        {/* Social Logins using FontAwesome */}
         <View style={styles.socialContainer}>
           <TouchableOpacity style={styles.socialIconBox}>
-             {/* Replace with <Image> or Icon */}
-            <Text style={styles.socialPlaceholder}></Text> 
+            <FontAwesome name="apple" size={28} color="#FFFFFF" />
           </TouchableOpacity>
+          
           <TouchableOpacity style={styles.socialIconBox}>
-            <Text style={[styles.socialPlaceholder, {color: '#EA4335'}]}>G</Text>
+            <FontAwesome name="google" size={28} color="#EA4335" />
           </TouchableOpacity>
+          
           <TouchableOpacity style={styles.socialIconBox}>
-            <Text style={[styles.socialPlaceholder, {color: '#1877F2'}]}>f</Text>
+            <FontAwesome name="facebook" size={28} color="#1877F2" />
           </TouchableOpacity>
         </View>
 
@@ -104,7 +98,7 @@ console.log(storage.getString('Passward'));
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#05070A", // Very deep navy/black
+    backgroundColor: "#05070A",
   },
   content: {
     flex: 1,
@@ -133,16 +127,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     fontWeight: "500",
   },
-  input: {
-    backgroundColor: "#0D1117",
-    borderWidth: 1,
-    borderColor: "#1A1F26",
-    borderRadius: 12,
-    height: 55,
-    paddingHorizontal: 15,
-    color: "#FFF",
-  },
-  passwordContainer: {
+  inputContainer: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#0D1117",
@@ -152,30 +137,13 @@ const styles = StyleSheet.create({
     height: 55,
     paddingHorizontal: 15,
   },
-  passwordInput: {
+  inputIcon: {
+    marginRight: 10,
+  },
+  input: {
     flex: 1,
     color: "#FFF",
-  },
-  forgotButton: {
-    alignSelf: "flex-end",
-    marginTop: 15,
-    marginBottom: 30,
-  },
-  forgotText: {
-    color: "#7B61FF",
-    fontSize: 14,
-  },
-  loginButton: {
-    backgroundColor: "#4F33FB", // Or use LinearGradient for the exact look
-    height: 55,
-    borderRadius: 12,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  loginButtonText: {
-    color: "#FFF",
-    fontSize: 18,
-    fontWeight: "600",
+    height: "100%",
   },
   dividerContainer: {
     flexDirection: "row",
@@ -206,11 +174,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#0D1117",
     justifyContent: "center",
     alignItems: "center",
-  },
-  socialPlaceholder: {
-    color: "#FFF",
-    fontSize: 24,
-    fontWeight: "bold",
   },
   footer: {
     flexDirection: "row",

@@ -1,11 +1,12 @@
 import React from "react";
 import WalletScreen from "app-wallet/Screens/Wallets";
 import LoginScreen from "app-Auth/Screens/Login";
+import SplashScreen from "app-Auth/Screens/SplashScreen";
 
 const App=()=>{
   return(
     <>
-    <WalletScreen />
+<LoginScreen />
     </>
   )
 }
