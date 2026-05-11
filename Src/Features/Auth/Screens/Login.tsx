@@ -11,22 +11,27 @@ import {
 import Icon from "react-native-vector-icons/MaterialIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Button from "app-Auth/Components/Buttons";
-import { supabase } from "app-Common/Supabase/SupabaseConnect";
+import { useNavigation } from "@react-navigation/native";
 const LoginScreen = () => {
   const [MobileNumber,setMobilenumber]=useState<string>('')
-
-  const SendOtp=async()=>{
-    const {data,error}=await supabase.auth.signInWithOtp({
-      phone:`+91${MobileNumber}`
-    });
-
-    if(error){
-      console.log('fail to send otp',error)
-      return false
+  const navigation=useNavigation()
+  const send_Mobilenumber=async()=>{
+    const send_Date=await fetch('http://192.168.0.106:8000/Login_newUser',{
+    method:'POST',
+     headers:{
+      'Content-Type': 'application/json',
+     },
+       body: JSON.stringify({
+          MobileNumber: Number(MobileNumber),
+        }),
+    })
+    const resp= await send_Date.json()
+    console.log(resp)
+    if(resp.status===200){
+      navigation.navigate('OtpScreen')
     }
     else{
-      console.log('success')
-      return true
+      console.log('fail')
     }
   }
 
@@ -55,7 +60,7 @@ const LoginScreen = () => {
           </View>
 
           <View style={{ marginTop: 30,marginLeft:40 ,width:"90%"}}>
-            <TouchableOpacity onPress={SendOtp}>
+            <TouchableOpacity onPress={send_Mobilenumber}>
               <Button title="Login" />
             </TouchableOpacity>
           </View>
