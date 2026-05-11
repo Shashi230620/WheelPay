@@ -8,11 +8,13 @@ import {
   Dimensions,
   StatusBar,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import OtpScreenbg from "app-Auth/assets/Otp.png";
-
+import storage from 'app-Common/Storage/Storage';
 const { height, width } = Dimensions.get('window');
 
 const OtpScreen = () => {
+  const navigation=useNavigation()
   const [otp, setOtp] = useState(Array(5).fill(""))
   const inputs = useRef<Array<TextInput | null>>([]);
 
@@ -23,6 +25,29 @@ const OtpScreen = () => {
     if (text && index < 5) {
       inputs.current[index + 1]?.focus();
     }
+    if(newOtp[newOtp.length-1]){
+   const verify_Otp=async()=>{
+   const Send_Otp=newOtp.join("")
+     console.log(Send_Otp)
+    const check_Otp=await fetch('http://192.168.0.103:8000/Verify_Otp',{
+    method:'POST',
+     headers:{
+      'Content-Type': 'application/json'
+     },
+       body: JSON.stringify({
+          MobileNumber: Number(8920395162),
+          Otp:Number(Send_Otp)
+        }),
+    })
+    const response=await check_Otp.json()
+    console.log(response)
+     if(response.status===200){
+      storage.set('session_Token',response.response[0].AuthToken)
+      navigation.navigate('WalletScreen')
+     }
+   }
+   verify_Otp()
+  };
   };
 
   const handleKeyPress = (e: any, index: number) => {

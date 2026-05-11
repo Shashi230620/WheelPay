@@ -16,7 +16,7 @@ const LoginScreen = () => {
   const [MobileNumber,setMobilenumber]=useState<string>('')
   const navigation=useNavigation()
   const send_Mobilenumber=async()=>{
-    const send_Date=await fetch('http://192.168.0.106:8000/Login_newUser',{
+    const send_Date=await fetch('http://192.168.0.103:8000/Login_newUser',{
     method:'POST',
      headers:{
       'Content-Type': 'application/json',
