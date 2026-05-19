@@ -9,45 +9,42 @@ import {
   StatusBar,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import OtpScreenbg from "app-Auth/assets/Otp.png";
-import storage from 'app-Common/Storage/Storage';
+import OtpScreenbg from "app-Shared/Features/Auth/assets/Otp.png"
+import storage from 'app-Shared/Services/Storage/Storage';
+import * as keychain from "react-native-keychain"
+import AuthStore from 'app-Shared/Services/Zustand/AppStores/AuthStore';
+
 const { height, width } = Dimensions.get('window');
 
-const OtpScreen = () => {
+const OtpScreen = ({route}) => {
   const navigation=useNavigation()
+  const {MobileNumber,Otp}=route.params
+  const {otp_Verifiy,response}=AuthStore()
   const [otp, setOtp] = useState(Array(5).fill(""))
   const inputs = useRef<Array<TextInput | null>>([]);
-
+  let newOtp=[...otp];
   const handleChange = (text: string, index: number) => {
-    const newOtp = [...otp];
     newOtp[index] = text;
     setOtp(newOtp);
     if (text && index < 5) {
       inputs.current[index + 1]?.focus();
     }
-    if(newOtp[newOtp.length-1]){
+  };
+   if(newOtp.at(-1)){
    const verify_Otp=async()=>{
    const Send_Otp=newOtp.join("")
-     console.log(Send_Otp)
-    const check_Otp=await fetch('http://192.168.0.103:8000/Verify_Otp',{
-    method:'POST',
-     headers:{
-      'Content-Type': 'application/json'
-     },
-       body: JSON.stringify({
-          MobileNumber: Number(8920395162),
-          Otp:Number(Send_Otp)
-        }),
+    await otp_Verifiy({
+      'MobileNumber':Number(MobileNumber),
+      'Otp':Number(Send_Otp)
     })
-    const response=await check_Otp.json()
-    console.log(response)
      if(response.status===200){
-      storage.set('session_Token',response.response[0].AuthToken)
+      console.log('this is the response',response.response[0].WheelPayId)
+      await keychain.setGenericPassword('AuthToken',response.response[0].AuthToken)
+      storage.set('WheelPayId',response.response[0].WheelPayId)
       navigation.navigate('WalletScreen')
      }
    }
    verify_Otp()
-  };
   };
 
   const handleKeyPress = (e: any, index: number) => {
@@ -73,7 +70,7 @@ const OtpScreen = () => {
           <Text style={styles.title}>Verify OTP</Text>
           <Text style={styles.subtitle}>
             Enter the 6-digit code sent to{"\n"}
-            <Text style={styles.phoneNumber}>+91 98765 43210</Text>
+            <Text style={styles.phoneNumber}>+91 {MobileNumber}</Text>
           </Text>
         </View>
 

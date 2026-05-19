@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -11,9 +11,18 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import UserWalletStore from 'app-Shared/Services/Zustand/AppStores/user_walletStore';
 const WalletScreen = () => {
+  // const [Walletbalance,setWalletBalance]=useState<number>()
+  const{user_walletDetails,resp}=UserWalletStore()
   const categories = ['All', 'Credit', 'Debit', 'Refund'];
+  useEffect(()=>{
+  const getWalletDetails=async()=>{
+    await user_walletDetails()
+    console.log("this is the response",resp)
+  }
+  getWalletDetails()
+  },[])
 
   return (
     <SafeAreaView style={styles.container}>

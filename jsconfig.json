@@ -2,9 +2,9 @@
   "compilerOptions": {
     "baseUrl": "./Src",
     "paths": {
-      "app-wallet/*": ["Features/Wallet/*"],
-      "app-Auth/*":["Features/Auth/"],
-      "app-Common/*":["Common"]
+      "app-Shared/*":["Shared"],
+      "app-Customer/*":["Customer_Modules"],
+      "app-Driver/*":["Driver_Modules"]
     }
   },
   "exclude": ["node_modules"]

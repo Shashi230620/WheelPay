@@ -27,9 +27,9 @@ module.exports = {
         root: ['./Src'],
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
         alias: {
-          'app-wallet': './Src/Features/Wallet',
-          'app-Auth': './Src/Features/Auth',
-          'app-Common':'./Src/Common',
+          'app-Shared':'./Src/Shared',
+          'app-Customer':'./Src/Customer_Modules',
+          'app-Driver':'./Src/Driver_Modules'
         },
       },
     ],

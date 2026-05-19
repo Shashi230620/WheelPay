@@ -10,25 +10,25 @@ import {
 // Import the icon sets
 import Icon from "react-native-vector-icons/MaterialIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Button from "app-Auth/Components/Buttons";
+import Button from "../Components/Buttons";
 import { useNavigation } from "@react-navigation/native";
+import AuthStore from "app-Shared/Services/Zustand/AppStores/AuthStore";
 const LoginScreen = () => {
-  const [MobileNumber,setMobilenumber]=useState<string>('')
+  const [MobileNumber,setMobilenumber]=useState<number>()
   const navigation=useNavigation()
+const {login,response}=AuthStore()
   const send_Mobilenumber=async()=>{
-    const send_Date=await fetch('http://192.168.0.103:8000/Login_newUser',{
-    method:'POST',
-     headers:{
-      'Content-Type': 'application/json',
-     },
-       body: JSON.stringify({
-          MobileNumber: Number(MobileNumber),
-        }),
-    })
-    const resp= await send_Date.json()
-    console.log(resp)
-    if(resp.status===200){
-      navigation.navigate('OtpScreen')
+    console.log(MobileNumber)
+      await login({
+        "MobileNumber":Number(MobileNumber)
+      })
+      console.log(response)
+    if(response.status===200){
+      navigation.navigate('OtpScreen',{
+      MobileNumber:response.response[0].MobileNumber,
+      Otp:response.response[0].OTP
+      })
+
     }
     else{
       console.log('fail')

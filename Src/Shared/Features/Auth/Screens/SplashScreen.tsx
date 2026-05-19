@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet, ScrollView, Dimensions, TouchableOpacity, SafeAreaView } from "react-native";
-import Button from "app-Auth/Components/Buttons";
+import Button from "../Components/Buttons";
 import { useNavigation } from "@react-navigation/native";
 const { width, height } = Dimensions.get("window");
 
@@ -10,14 +10,14 @@ const SplashScreen = () => {
   const [RotationImages] = useState([
     {
       id: 1,
-      img: require("app-Auth/assets/1.png"),
+      img: require("app-Shared/Features/Auth/assets/1.png"),
       title: "Discover a",
       titleAccent: "Smarter Way",
       subtitle: "One app for all your payments,\nrides and more.",
     },
-    { id: 2, img: require("app-Auth/assets/2.png"), title: "Secure", titleAccent: "Every Payment", subtitle: "Advance security to keep your money safe." },
-    { id: 3, img: require("app-Auth/assets/3.png"), title: "Book ride", titleAccent: "With Ease", subtitle: "Quick, reliable and affordable ride anytime." },
-    { id: 4, img: require("app-Auth/assets/4.png"), title: "Track and Manage", titleAccent: " Everything", subtitle: "Track expenses, manage budgets and grow smarter." },
+    { id: 2, img: require("app-Shared/Features/Auth/assets/2.png"), title: "Secure", titleAccent: "Every Payment", subtitle: "Advance security to keep your money safe." },
+    { id: 3, img: require("app-Shared/Features/Auth/assets/3.png"), title: "Book ride", titleAccent: "With Ease", subtitle: "Quick, reliable and affordable ride anytime." },
+    { id: 4, img: require("app-Shared/Features/Auth/assets/4.png"), title: "Track and Manage", titleAccent: " Everything", subtitle: "Track expenses, manage budgets and grow smarter." },
   ]);
  useEffect(()=>{
   const timer=setTimeout(() => {
@@ -76,7 +76,7 @@ const SplashScreen = () => {
     return(
       <View style={styles.container}>
          <View style={styles.imageWrapper}>
-        <Image source={require("app-Auth/assets/Splashscreenbg_1.png") } resizeMode="cover" style={styles.FIrstImage}/>
+        <Image source={require("app-Shared/Features/Auth/assets/Splashscreenbg_1.png") } resizeMode="cover" style={styles.FIrstImage}/>
         </View>
       </View>
     )
