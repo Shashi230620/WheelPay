@@ -7,9 +7,10 @@ const WheelPayId=storage.getString('WheelPayId')
 const UserWalletStore=create((set)=>({
     user_walletDetails:async()=>{
         try{
-            const getDetails=await fetch(`${Base_Url}/customer_walletDetails`,{method:'GET',headers:{'Content-Type': 'application/json', WheelPayId: WheelPayId,}})
-            const resp=await getDetails.json()
-            set({resp})
+            const getDetails=await fetch(`${Base_Url}/customer_walletDetails`,{method:'GET',headers:{'Content-Type': 'application/json', WheelPayId:String(WheelPayId),}})
+            const response=await getDetails.json()
+            console.log('this is WalletStore ',response)
+            set({response})
         }
         catch(error){
             console.log('their is an error in walletDetails')

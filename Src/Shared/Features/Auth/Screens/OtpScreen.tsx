@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -17,7 +17,7 @@ import AuthStore from 'app-Shared/Services/Zustand/AppStores/AuthStore';
 const { height, width } = Dimensions.get('window');
 
 const OtpScreen = ({route}) => {
-  const navigation=useNavigation()
+  const navigation=useNavigation<any>()
   const {MobileNumber,Otp}=route.params
   const {otp_Verifiy,response}=AuthStore()
   const [otp, setOtp] = useState(Array(5).fill(""))
@@ -30,7 +30,8 @@ const OtpScreen = ({route}) => {
       inputs.current[index + 1]?.focus();
     }
   };
-   if(newOtp.at(-1)){
+ useEffect(()=>{
+  if(newOtp.at(-1)){
    const verify_Otp=async()=>{
    const Send_Otp=newOtp.join("")
     await otp_Verifiy({
@@ -38,14 +39,16 @@ const OtpScreen = ({route}) => {
       'Otp':Number(Send_Otp)
     })
      if(response.status===200){
-      console.log('this is the response',response.response[0].WheelPayId)
       await keychain.setGenericPassword('AuthToken',response.response[0].AuthToken)
       storage.set('WheelPayId',response.response[0].WheelPayId)
+      setOtp(Array(5).fill(""))
       navigation.navigate('WalletScreen')
      }
    }
    verify_Otp()
+
   };
+ },[newOtp])
 
   const handleKeyPress = (e: any, index: number) => {
     if (e.nativeEvent.key === 'Backspace' && !otp[index] && index > 0) {

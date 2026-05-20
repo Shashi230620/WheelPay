@@ -12,17 +12,22 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import UserWalletStore from 'app-Shared/Services/Zustand/AppStores/user_walletStore';
+import storage from 'app-Shared/Services/Storage/Storage';
 const WalletScreen = () => {
-  // const [Walletbalance,setWalletBalance]=useState<number>()
-  const{user_walletDetails,resp}=UserWalletStore()
+  const [Walletbalance,setWalletBalance]=useState<number>()
+  const{user_walletDetails,response}=UserWalletStore()
   const categories = ['All', 'Credit', 'Debit', 'Refund'];
   useEffect(()=>{
   const getWalletDetails=async()=>{
     await user_walletDetails()
-    console.log("this is the response",resp)
+    console.log("this is the response of wallet",response)
+    storage.set('Amount',response.response[0].Amount)
+    const WalletAmount=storage.getNumber('Amount')
+    setWalletBalance(WalletAmount)
+
   }
   getWalletDetails()
-  },[])
+  },[user_walletDetails])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -46,7 +51,7 @@ const WalletScreen = () => {
           <Text style={styles.balanceLabel}>Available Balance</Text>
           <View style={styles.balanceRow}>
             <Text style={styles.currencySymbol}>₹</Text>
-            <Text style={styles.balanceValue}>12,450</Text>
+            <Text style={styles.balanceValue}>{Walletbalance}</Text>
             <Text style={styles.balanceDecimal}>.75</Text>
           </View>
           <Text style={styles.balanceChange}>+ ₹320.25 (2.45%)</Text>
